@@ -6,7 +6,6 @@ import {
   getFirestore,
   collection,
   doc,
-  setDoc,
   deleteDoc,
   onSnapshot,
   addDoc,
@@ -37,10 +36,14 @@ import {
   Calendar as CalendarIcon,
   MessageSquare,
   EyeOff,
-  Repeat
+  Repeat,
+  Moon,
+  Coffee,
+  Palette,
+  Briefcase
 } from 'lucide-react';
 
-// Твоя конфигурация Firebase (проект amaliia-plan)
+// Конфигурация Firebase (проект amaliia-plan)
 const firebaseConfig = {
   apiKey: "AIzaSyA1yrxFQboFkLj43d5CvqOVMhp9D7h8ER8",
   authDomain: "amaliia-plan.firebaseapp.com",
@@ -95,17 +98,44 @@ const CATEGORIES = {
     icon: Users
   },
   vocal: {
-    label: 'Вокал / Немецкий',
-    friendStatus: 'На вокале или доп. немецком',
+    label: 'Вокал / Допы',
+    friendStatus: 'На вокале или дополнительных занятиях',
     color: 'bg-rose-500/15 border-rose-500/40 text-rose-300',
     badge: 'bg-rose-500/20 text-rose-300',
     icon: Music
+  },
+  sleep: {
+    label: 'Сон',
+    friendStatus: 'Спит 😴 (не будить!)',
+    color: 'bg-indigo-500/15 border-indigo-500/40 text-indigo-300',
+    badge: 'bg-indigo-500/20 text-indigo-300',
+    icon: Moon
+  },
+  rest: {
+    label: 'Отдых / Игры / Чилл',
+    friendStatus: 'Отдыхает (можно звать в ДС или катку)',
+    color: 'bg-teal-500/15 border-teal-500/40 text-teal-300',
+    badge: 'bg-teal-500/20 text-teal-300',
+    icon: Coffee
+  },
+  hobby: {
+    label: 'Хобби / Творчество',
+    friendStatus: 'Занята творчеством / музыкой / рукоделием',
+    color: 'bg-fuchsia-500/15 border-fuchsia-500/40 text-fuchsia-300',
+    badge: 'bg-fuchsia-500/20 text-fuchsia-300',
+    icon: Palette
+  },
+  errands: {
+    label: 'Дела / Поручения',
+    friendStatus: 'Занята личными делами',
+    color: 'bg-orange-500/15 border-orange-500/40 text-orange-300',
+    badge: 'bg-orange-500/20 text-orange-300',
+    icon: Briefcase
   }
 };
 
-// Стартовое расписание (фиксированные ID — никаких дублей)
+// Стартовое расписание
 const INITIAL_EVENTS = [
-  // Понедельник
   {
     id: 'seed_mon_train',
     day: 1,
@@ -145,7 +175,6 @@ const INITIAL_EVENTS = [
     weekKey: 'recurring',
     hiddenWeeks: []
   },
-  // Вторник
   {
     id: 'seed_tue_train',
     day: 2,
@@ -185,7 +214,6 @@ const INITIAL_EVENTS = [
     weekKey: 'recurring',
     hiddenWeeks: []
   },
-  // Среда
   {
     id: 'seed_wed_varya',
     day: 3,
@@ -225,7 +253,6 @@ const INITIAL_EVENTS = [
     weekKey: 'recurring',
     hiddenWeeks: []
   },
-  // Четверг
   {
     id: 'seed_thu_train',
     day: 4,
@@ -252,7 +279,6 @@ const INITIAL_EVENTS = [
     weekKey: 'recurring',
     hiddenWeeks: []
   },
-  // Пятница
   {
     id: 'seed_fri_vocal',
     day: 5,
@@ -314,11 +340,10 @@ export default function App() {
   const [deadlines, setDeadlines] = useState([]);
   const [pings, setPings] = useState([]);
 
-  // Навигация по неделям (по умолчанию старт с понедельника KW 48 — 23.11.2026)
   const [weekOffset, setWeekOffset] = useState(() => {
     const now = new Date();
     const currentMon = getWeekMonday(now);
-    const targetMon = new Date(2026, 10, 23); // 23 ноября 2026
+    const targetMon = new Date(2026, 10, 23);
     const diffWeeks = Math.round((targetMon - currentMon) / (7 * 24 * 60 * 60 * 1000));
     return diffWeeks > 0 ? diffWeeks : 0;
   });
@@ -328,7 +353,6 @@ export default function App() {
     return d === 0 ? 1 : d;
   });
 
-  // Форма добавления события
   const [newEvent, setNewEvent] = useState({
     day: 1,
     start: '14:00',
@@ -340,20 +364,16 @@ export default function App() {
     isRecurring: false
   });
 
-  // Форма дедлайна
   const [newDeadline, setNewDeadline] = useState({ title: '', course: 'НТУ «ХПІ»', due: '' });
 
-  // Форма пинга от друга
   const [friendName, setFriendName] = useState('');
   const [pingMessage, setPingMessage] = useState('');
   const [pingSent, setPingSent] = useState(false);
 
-  // Обычный настраиваемый таймер фокуса
   const [customMinutes, setCustomMinutes] = useState(45);
   const [secondsLeft, setSecondsLeft] = useState(45 * 60);
   const [timerRunning, setTimerRunning] = useState(false);
 
-  // Австрийское время в реальном времени
   const [austriaNow, setAustriaNow] = useState(new Date());
 
   useEffect(() => {
@@ -361,14 +381,12 @@ export default function App() {
     return () => clearInterval(id);
   }, []);
 
-  // Авторизация Firebase
   useEffect(() => {
     signInAnonymously(auth).catch(console.error);
     const unsub = onAuthStateChanged(auth, (u) => setUser(u));
     return () => unsub();
   }, []);
 
-  // Загрузка расписания и защита от дубликатов
   useEffect(() => {
     if (!user) return;
     const eventsRef = collection(db, 'schedule_events');
@@ -420,7 +438,6 @@ export default function App() {
     };
   }, [user]);
 
-  // Таймер обратного отсчёта
   useEffect(() => {
     if (!timerRunning) return;
     const interval = setInterval(() => {
@@ -444,7 +461,6 @@ export default function App() {
   const activeWeekKey = formatWeekKey(activeMonday);
   const activeKW = getISOWeekNumber(activeMonday);
 
-  // Даты для каждого дня выбранной недели
   const weekDatesMap = useMemo(() => {
     const map = {};
     DAYS.forEach((d, idx) => {
@@ -455,7 +471,6 @@ export default function App() {
     return map;
   }, [activeMonday]);
 
-  // Отфильтрованные события на текущую выбранную неделю
   const weekEvents = useMemo(() => {
     return events
       .filter((ev) => {
@@ -466,7 +481,6 @@ export default function App() {
       .sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start));
   }, [events, activeWeekKey]);
 
-  // Статус Амалии прямо сейчас
   const currentStatus = useMemo(() => {
     const day = austriaNow.getDay();
     const mins = austriaNow.getHours() * 60 + austriaNow.getMinutes();
@@ -482,8 +496,9 @@ export default function App() {
 
     if (activeNow) {
       const cat = CATEGORIES[activeNow.category] || CATEGORIES.jku;
+      const isFreeToPing = activeNow.category === 'rest';
       return {
-        busy: true,
+        busy: !isFreeToPing,
         label: cat.friendStatus,
         detail: `${activeNow.title} (${activeNow.start}–${activeNow.end})`
       };
@@ -495,12 +510,11 @@ export default function App() {
     };
   }, [events, austriaNow]);
 
-  // Свободные окна для учёбы в выбранный день
   const freeWindows = useMemo(() => {
     const dayEvs = weekEvents.filter((e) => e.day === selectedDay);
     const windows = [];
-    let cursor = 9 * 60; // с 09:00
-    const endOfDay = 21 * 60; // до 21:00
+    let cursor = 9 * 60;
+    const endOfDay = 21 * 60;
 
     dayEvs.forEach((ev) => {
       const s = timeToMinutes(ev.start);
@@ -539,9 +553,11 @@ export default function App() {
 
   const handleAddEvent = async (e) => {
     e.preventDefault();
-    if (!newEvent.title.trim()) return;
+    const fallbackTitle = CATEGORIES[newEvent.category]?.label || 'Событие';
+    const titleToSave = newEvent.title.trim() || fallbackTitle;
     await addDoc(collection(db, 'schedule_events'), {
       ...newEvent,
+      title: titleToSave,
       day: Number(newEvent.day),
       weekKey: newEvent.isRecurring ? 'recurring' : activeWeekKey,
       hiddenWeeks: []
@@ -604,7 +620,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0d0f14] text-slate-100 font-sans selection:bg-violet-500/30">
-      {/* Верхняя панель */}
       <header className="border-b border-slate-800/80 bg-[#12151e]/90 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -647,7 +662,6 @@ export default function App() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">
-        {/* Виджет текущего статуса */}
         <div
           className={`rounded-2xl p-4 border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
             currentStatus.busy
@@ -674,7 +688,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Навигация по неделям */}
         <div className="bg-[#141824] border border-slate-800 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <button
@@ -719,7 +732,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Переключатель дней недели */}
         <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
           {DAYS.map((d) => {
             const count = weekEvents.filter((e) => e.day === d.id).length;
@@ -748,9 +760,7 @@ export default function App() {
           })}
         </div>
 
-        {/* Основная сетка: Расписание + Боковая панель */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Левая колонка: События дня */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-semibold text-white">
@@ -831,7 +841,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Подсказка свободных окон для учёбы (видна только Амалии) */}
             {isAdmin && (
               <div className="bg-[#141824] border border-slate-800 rounded-2xl p-4 space-y-2">
                 <div className="text-xs font-semibold uppercase tracking-wider text-violet-400">
@@ -854,7 +863,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Форма добавления события (только для Амалии) */}
             {isAdmin && (
               <form
                 onSubmit={handleAddEvent}
@@ -862,7 +870,7 @@ export default function App() {
               >
                 <div className="text-sm font-semibold text-white flex items-center gap-2">
                   <Plus className="w-4 h-4 text-violet-400" />
-                  Добавить пару, поезд или занятие
+                  Добавить пару, поезд, сон или отдых
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <select
@@ -903,14 +911,14 @@ export default function App() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <input
                     type="text"
-                    placeholder="Название (например, Лаба по программированию ХПІ)"
+                    placeholder="Название (если пусто — подставится категория)"
                     value={newEvent.title}
                     onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
                     className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"
                   />
                   <input
                     type="text"
-                    placeholder="Аудитория / Платформа / Ссылка"
+                    placeholder="Место / Аудитория / Игра"
                     value={newEvent.location}
                     onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
                     className="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white"
@@ -944,9 +952,7 @@ export default function App() {
             )}
           </div>
 
-          {/* Правая колонка: Пинг от друзей + Таймер + Дедлайны */}
           <div className="space-y-5">
-            {/* Виджет для друзей: Пингануть Амалию */}
             <div className="bg-[#141824] border border-slate-800 rounded-2xl p-4 space-y-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-white">
                 <Bell className="w-4 h-4 text-violet-400" />
@@ -1003,7 +1009,6 @@ export default function App() {
               )}
             </div>
 
-            {/* Входящие пинги от друзей (видны только Амалии) */}
             {isAdmin && (
               <div className="bg-[#141824] border border-violet-500/30 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
@@ -1045,7 +1050,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Настраиваемый таймер фокуса (только для Амалии) */}
             {isAdmin && (
               <div className="bg-[#141824] border border-slate-800 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
@@ -1104,7 +1108,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Закрытый трекер дедлайнів (виден только Амалии) */}
             {isAdmin && (
               <div className="bg-[#141824] border border-slate-800 rounded-2xl p-4 space-y-3">
                 <div className="text-sm font-semibold text-white">Дедлайны (JKU & ХПІ)</div>
@@ -1175,7 +1178,6 @@ export default function App() {
         </div>
       </main>
 
-      {/* Модальное окно входа (без подсказок PIN-кода) */}
       {showPinModal && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <form
