@@ -133,105 +133,105 @@ const TREE_SLOTS = [
   { x: 74, y: 76 }
 ];
 
-// Чистые вечерние оттенки категорий без «грязной» примеси
+// Чистые вечерние оттенки категорий с чистым акцентом без смешивания в муть
 const CATEGORIES = {
   transit: {
     label: 'ÖBB / Дорога',
     friendStatus: 'В поезде / дороге в Линц',
-    hex: '#2b5d82',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(43, 93, 130, 0.45) 0%, rgba(16, 29, 44, 0.90) 100%)',
-      borderColor: 'rgba(116, 179, 224, 0.38)'
+    hex: '#4ea3e3',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(78, 163, 227, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #4ea3e3'
     },
-    badge: 'bg-[#2b5d82]/55 text-[#c9e6fc] border border-[#74b3e0]/30',
+    badge: 'bg-[#254b6b]/70 text-[#cfe9ff] border border-[#6cb8f2]/35',
     icon: Train
   },
   jku: {
     label: 'JKU Linz',
     friendStatus: 'На паре в JKU Linz',
-    hex: '#57468a',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(87, 70, 138, 0.46) 0%, rgba(24, 21, 44, 0.90) 100%)',
-      borderColor: 'rgba(166, 146, 227, 0.38)'
+    hex: '#9279e6',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(146, 121, 230, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #9279e6'
     },
-    badge: 'bg-[#57468a]/55 text-[#e2d9fc] border border-[#a692e3]/30',
+    badge: 'bg-[#3d3169]/70 text-[#e5dcff] border border-[#ab96f5]/35',
     icon: GraduationCap
   },
   khpi: {
     label: 'НТУ «ХПІ»',
     friendStatus: 'Закрывает лабы/контрольные ХПІ',
-    hex: '#996c2b',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(153, 108, 43, 0.44) 0%, rgba(28, 28, 38, 0.90) 100%)',
-      borderColor: 'rgba(237, 188, 111, 0.40)'
+    hex: '#e8aa48',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(232, 170, 72, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #e8aa48'
     },
-    badge: 'bg-[#996c2b]/55 text-[#fae5c2] border border-[#edbc6f]/30',
+    badge: 'bg-[#66491c]/70 text-[#ffebc2] border border-[#f2be68]/35',
     icon: BookOpen
   },
   tutoring: {
     label: 'Занятие с Варей',
     friendStatus: 'Помогает Варе с учёбой',
-    hex: '#256e59',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(37, 110, 89, 0.45) 0%, rgba(15, 36, 34, 0.90) 100%)',
-      borderColor: 'rgba(106, 207, 178, 0.38)'
+    hex: '#46c79e',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(70, 199, 158, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #46c79e'
     },
-    badge: 'bg-[#256e59]/55 text-[#c6f5e7] border border-[#6acfb2]/30',
+    badge: 'bg-[#1f5947]/70 text-[#cbf7e9] border border-[#6cd9b6]/35',
     icon: Users
   },
   vocal: {
     label: 'Вокал / Допы',
     friendStatus: 'На вокале или дополнительных занятиях',
-    hex: '#873c58',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(135, 60, 88, 0.45) 0%, rgba(34, 20, 34, 0.90) 100%)',
-      borderColor: 'rgba(224, 126, 162, 0.38)'
+    hex: '#de6b97',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(222, 107, 151, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #de6b97'
     },
-    badge: 'bg-[#873c58]/55 text-[#fad4e3] border border-[#e07ea2]/30',
+    badge: 'bg-[#61273e]/70 text-[#ffd6e6] border border-[#ed8bb1]/35',
     icon: Music
   },
   sleep: {
     label: 'Сон',
     friendStatus: 'Спит ❄️ (не будить)',
-    hex: '#2b3e78',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(43, 62, 120, 0.46) 0%, rgba(15, 22, 42, 0.92) 100%)',
-      borderColor: 'rgba(122, 151, 230, 0.36)'
+    hex: '#5c7ce0',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(92, 124, 224, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #5c7ce0'
     },
-    badge: 'bg-[#2b3e78]/60 text-[#ccd9fc] border border-[#7a97e6]/30',
+    badge: 'bg-[#26386e]/70 text-[#d4e0ff] border border-[#7f9cf2]/35',
     icon: Moon
   },
   rest: {
     label: 'Отдых / Игры / Чилл',
     friendStatus: 'Отдыхает (можно звать в ДС или катку)',
-    hex: '#246b75',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(36, 107, 117, 0.45) 0%, rgba(15, 35, 44, 0.90) 100%)',
-      borderColor: 'rgba(106, 203, 217, 0.38)'
+    hex: '#46bdcc',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(70, 189, 204, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #46bdcc'
     },
-    badge: 'bg-[#246b75]/55 text-[#c4f1f7] border border-[#6acbd9]/30',
+    badge: 'bg-[#1e545c]/70 text-[#ccf4fa] border border-[#6cd0de]/35',
     icon: Coffee
   },
   hobby: {
     label: 'Хобби / Творчество',
     friendStatus: 'Занята творчеством / музыкой / рукоделием',
-    hex: '#6b427a',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(107, 66, 122, 0.45) 0%, rgba(30, 22, 42, 0.90) 100%)',
-      borderColor: 'rgba(191, 134, 212, 0.38)'
+    hex: '#b577cc',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(181, 119, 204, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #b577cc'
     },
-    badge: 'bg-[#6b427a]/55 text-[#edd2f7] border border-[#bf86d4]/30',
+    badge: 'bg-[#4f2e5c]/70 text-[#f2d9fc] border border-[#cb96e0]/35',
     icon: Palette
   },
   errands: {
     label: 'Дела / Поручения',
     friendStatus: 'Занята личными делами',
-    hex: '#38638c',
-    surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(56, 99, 140, 0.45) 0%, rgba(18, 31, 46, 0.90) 100%)',
-      borderColor: 'rgba(133, 184, 232, 0.38)'
+    hex: '#69a6e0',
+    rowStyle: {
+      background: 'linear-gradient(90deg, rgba(105, 166, 224, 0.16) 0%, rgba(18, 28, 46, 0.92) 55%)',
+      borderLeft: '4px solid #69a6e0'
     },
-    badge: 'bg-[#38638c]/55 text-[#cfe8ff] border border-[#85b8e8]/30',
+    badge: 'bg-[#2a4a6b]/70 text-[#d6ebff] border border-[#8abef0]/35',
     icon: Briefcase
   }
 };
@@ -485,35 +485,12 @@ function groupScheduleBlocks(dayEvents) {
     }
   });
 
-  return blocks.map((b) => {
-    const colors = b.events.map((ev) => (CATEGORIES[ev.category] || CATEGORIES.jku).hex);
-    const uniqueColors = [...new Set(colors)];
-
-    let cardStyle;
-    if (uniqueColors.length > 1) {
-      const stops = uniqueColors
-        .map((hex, idx) => {
-          const pct = Math.round((idx / (uniqueColors.length - 1)) * 100);
-          return `${hex}66 ${pct}%`;
-        })
-        .join(', ');
-      cardStyle = {
-        background: `linear-gradient(120deg, ${stops}, rgba(17, 25, 41, 0.92) 100%)`,
-        borderColor: `${uniqueColors[0]}99`
-      };
-    } else {
-      const cat = CATEGORIES[b.events[0].category] || CATEGORIES.jku;
-      cardStyle = cat.surfaceStyle;
-    }
-
-    return {
-      ...b,
-      startLabel: minutesToTime(b.startMin),
-      endLabel: minutesToTime(b.endMin),
-      cardStyle,
-      isMerged: b.events.length > 1
-    };
-  });
+  return blocks.map((b) => ({
+    ...b,
+    startLabel: minutesToTime(b.startMin),
+    endLabel: minutesToTime(b.endMin),
+    isMerged: b.events.length > 1
+  }));
 }
 
 export default function App() {
@@ -1096,33 +1073,24 @@ export default function App() {
                   return (
                     <div
                       key={block.id}
-                      style={block.cardStyle}
-                      className="rounded-2xl border backdrop-blur-md shadow-lg shadow-black/25 overflow-hidden transition"
+                      className="rounded-2xl border border-[#8bb8e3]/25 bg-[#121c2e]/92 backdrop-blur-md shadow-lg shadow-black/25 overflow-hidden transition"
                     >
                       {block.isMerged && (
-                        <div className="px-4 py-1.5 text-[11px] font-medium text-[#e6f2fc] bg-black/25 border-b border-white/10 flex items-center justify-between">
+                        <div className="px-4 py-1.5 text-[11px] font-medium text-[#d7e8f7] bg-[#0d1422]/90 border-b border-[#8bb8e3]/15 flex items-center justify-between">
                           <span>Связанные занятия · {block.startLabel} – {block.endLabel}</span>
-                          <span className="opacity-75">плавный переход</span>
+                          <span className="text-[#8fa7bd]">стык по времени</span>
                         </div>
                       )}
 
-                      <div className="divide-y divide-white/10">
-                        {block.events.map((ev, idx) => {
+                      <div className="divide-y divide-[#8bb8e3]/15">
+                        {block.events.map((ev) => {
                           const cat = CATEGORIES[ev.category] || CATEGORIES.jku;
                           const IconComponent = cat.icon;
 
                           return (
                             <div
                               key={ev.id}
-                              style={
-                                block.isMerged && idx > 0
-                                  ? {
-                                      background: `linear-gradient(90deg, ${
-                                        (CATEGORIES[block.events[idx - 1].category] || CATEGORIES.jku).hex
-                                      }33 0%, ${cat.hex}44 100%)`
-                                    }
-                                  : undefined
-                              }
+                              style={cat.rowStyle}
                               className="p-4 flex items-start justify-between gap-3"
                             >
                               <div className="space-y-1 min-w-0">
@@ -1140,7 +1108,7 @@ export default function App() {
                                   )}
                                 </div>
                                 <h3 className="text-base font-semibold text-[#ffffff] flex items-center gap-2">
-                                  <IconComponent className="w-4 h-4 shrink-0 text-[#c9e4fc]" />
+                                  <IconComponent className="w-4 h-4 shrink-0" style={{ color: cat.hex }} />
                                   <span>{ev.title}</span>
                                 </h3>
                                 {ev.location && (
@@ -1177,7 +1145,7 @@ export default function App() {
                       </div>
 
                       {block.nested.length > 0 && (
-                        <div className="px-4 pb-4 pt-1 space-y-2.5">
+                        <div className="px-4 pb-4 pt-2 space-y-2.5 bg-[#0e1624]/60">
                           {block.nested.map((inner) => {
                             const innerCat = CATEGORIES[inner.category] || CATEGORIES.jku;
                             const InnerIcon = innerCat.icon;
@@ -1186,10 +1154,10 @@ export default function App() {
                               <div
                                 key={inner.id}
                                 style={{
-                                  background: `linear-gradient(90deg, ${outerHex}88 0%, ${innerCat.hex}99 16%, ${innerCat.hex}99 84%, ${outerHex}88 100%)`,
-                                  borderColor: `${innerCat.hex}cc`
+                                  ...innerCat.rowStyle,
+                                  borderColor: `${outerHex}55`
                                 }}
-                                className="rounded-xl p-3.5 border shadow-inner flex items-start justify-between gap-3"
+                                className="rounded-xl p-3.5 border flex items-start justify-between gap-3"
                               >
                                 <div className="space-y-1 min-w-0">
                                   <div className="flex flex-wrap items-center gap-2">
@@ -1199,12 +1167,12 @@ export default function App() {
                                     <span className={`text-[11px] px-2 py-0.5 rounded-md font-medium ${innerCat.badge}`}>
                                       {innerCat.label}
                                     </span>
-                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-black/30 text-[#e6f2fc]">
+                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#1a2840] text-[#c8ddf0]">
                                       внутри блока
                                     </span>
                                   </div>
                                   <div className="text-sm font-semibold text-[#ffffff] flex items-center gap-2">
-                                    <InnerIcon className="w-4 h-4 shrink-0 text-[#e6f2fc]" />
+                                    <InnerIcon className="w-4 h-4 shrink-0" style={{ color: innerCat.hex }} />
                                     <span>{inner.title}</span>
                                   </div>
                                   {(inner.location || inner.details) && (
@@ -1270,7 +1238,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Форма добавления события с заметным переключателем повтора */}
+            {/* Форма добавления события */}
             {isAdmin && (
               <form
                 onSubmit={handleAddEvent}
@@ -1340,7 +1308,6 @@ export default function App() {
                   className="w-full bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                 />
 
-                {/* Крупная и чёткая плашка «Повторять каждую неделю» */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
                   <button
                     type="button"
@@ -1381,7 +1348,7 @@ export default function App() {
 
           {/* Правая колонка */}
           <div className="space-y-5">
-            {/* Пингануть Амалию (без Вани) */}
+            {/* Пингануть Амалию */}
             <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 backdrop-blur-md rounded-2xl p-4 space-y-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-[#f2f7fc]">
                 <Bell className="w-4 h-4 text-[#ffd48a]" />
@@ -1657,7 +1624,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Обновлённый блок дедлайнов */}
+            {/* Дедлайны */}
             {isAdmin && (
               <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 rounded-2xl p-4 space-y-3.5">
                 <div className="flex items-center justify-between">
