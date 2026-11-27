@@ -41,7 +41,9 @@ import {
   Palette,
   Briefcase,
   Snowflake,
-  Sparkles
+  Sparkles,
+  CheckSquare,
+  Square
 } from 'lucide-react';
 
 // Конфигурация Firebase (проект amaliia-plan)
@@ -113,7 +115,6 @@ const ORNAMENTS = [
   }
 ];
 
-// Координаты ветвей ёлки (в процентах), чтобы игрушки красиво висели по ярусам
 const TREE_SLOTS = [
   { x: 50, y: 24 },
   { x: 42, y: 36 },
@@ -132,105 +133,105 @@ const TREE_SLOTS = [
   { x: 74, y: 76 }
 ];
 
-// Приглушённые вечерние оттенки категорий, гармонирующие с тёплыми огнями и вечерним небом
+// Чистые вечерние оттенки категорий без «грязной» примеси
 const CATEGORIES = {
   transit: {
     label: 'ÖBB / Дорога',
     friendStatus: 'В поезде / дороге в Линц',
-    hex: '#365873',
+    hex: '#2b5d82',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(54, 88, 115, 0.42) 0%, rgba(25, 38, 52, 0.88) 100%)',
-      borderColor: 'rgba(126, 175, 214, 0.35)'
+      background: 'linear-gradient(135deg, rgba(43, 93, 130, 0.45) 0%, rgba(16, 29, 44, 0.90) 100%)',
+      borderColor: 'rgba(116, 179, 224, 0.38)'
     },
-    badge: 'bg-[#365873]/55 text-[#c7e3fa] border border-[#7eafd6]/30',
+    badge: 'bg-[#2b5d82]/55 text-[#c9e6fc] border border-[#74b3e0]/30',
     icon: Train
   },
   jku: {
     label: 'JKU Linz',
     friendStatus: 'На паре в JKU Linz',
-    hex: '#574a7a',
+    hex: '#57468a',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(87, 74, 122, 0.44) 0%, rgba(38, 32, 54, 0.88) 100%)',
-      borderColor: 'rgba(166, 148, 214, 0.35)'
+      background: 'linear-gradient(135deg, rgba(87, 70, 138, 0.46) 0%, rgba(24, 21, 44, 0.90) 100%)',
+      borderColor: 'rgba(166, 146, 227, 0.38)'
     },
-    badge: 'bg-[#574a7a]/55 text-[#dfd6f7] border border-[#a694d6]/30',
+    badge: 'bg-[#57468a]/55 text-[#e2d9fc] border border-[#a692e3]/30',
     icon: GraduationCap
   },
   khpi: {
     label: 'НТУ «ХПІ»',
     friendStatus: 'Закрывает лабы/контрольные ХПІ',
-    hex: '#8a6636',
+    hex: '#996c2b',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(138, 102, 54, 0.42) 0%, rgba(56, 41, 24, 0.88) 100%)',
-      borderColor: 'rgba(227, 182, 118, 0.38)'
+      background: 'linear-gradient(135deg, rgba(153, 108, 43, 0.44) 0%, rgba(28, 28, 38, 0.90) 100%)',
+      borderColor: 'rgba(237, 188, 111, 0.40)'
     },
-    badge: 'bg-[#8a6636]/55 text-[#f7e1be] border border-[#e3b676]/30',
+    badge: 'bg-[#996c2b]/55 text-[#fae5c2] border border-[#edbc6f]/30',
     icon: BookOpen
   },
   tutoring: {
     label: 'Занятие с Варей',
     friendStatus: 'Помогает Варе с учёбой',
-    hex: '#346958',
+    hex: '#256e59',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(52, 105, 88, 0.42) 0%, rgba(24, 48, 41, 0.88) 100%)',
-      borderColor: 'rgba(118, 196, 171, 0.36)'
+      background: 'linear-gradient(135deg, rgba(37, 110, 89, 0.45) 0%, rgba(15, 36, 34, 0.90) 100%)',
+      borderColor: 'rgba(106, 207, 178, 0.38)'
     },
-    badge: 'bg-[#346958]/55 text-[#c5ede0] border border-[#76c4ab]/30',
+    badge: 'bg-[#256e59]/55 text-[#c6f5e7] border border-[#6acfb2]/30',
     icon: Users
   },
   vocal: {
     label: 'Вокал / Допы',
     friendStatus: 'На вокале или дополнительных занятиях',
-    hex: '#7d4054',
+    hex: '#873c58',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(125, 64, 84, 0.42) 0%, rgba(54, 28, 37, 0.88) 100%)',
-      borderColor: 'rgba(214, 129, 157, 0.36)'
+      background: 'linear-gradient(135deg, rgba(135, 60, 88, 0.45) 0%, rgba(34, 20, 34, 0.90) 100%)',
+      borderColor: 'rgba(224, 126, 162, 0.38)'
     },
-    badge: 'bg-[#7d4054]/55 text-[#f5ccd9] border border-[#d6819d]/30',
+    badge: 'bg-[#873c58]/55 text-[#fad4e3] border border-[#e07ea2]/30',
     icon: Music
   },
   sleep: {
     label: 'Сон',
     friendStatus: 'Спит ❄️ (не будить)',
-    hex: '#313d63',
+    hex: '#2b3e78',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(49, 61, 99, 0.44) 0%, rgba(22, 27, 46, 0.90) 100%)',
-      borderColor: 'rgba(122, 143, 207, 0.34)'
+      background: 'linear-gradient(135deg, rgba(43, 62, 120, 0.46) 0%, rgba(15, 22, 42, 0.92) 100%)',
+      borderColor: 'rgba(122, 151, 230, 0.36)'
     },
-    badge: 'bg-[#313d63]/60 text-[#c7d4fa] border border-[#7a8fcf]/30',
+    badge: 'bg-[#2b3e78]/60 text-[#ccd9fc] border border-[#7a97e6]/30',
     icon: Moon
   },
   rest: {
     label: 'Отдых / Игры / Чилл',
     friendStatus: 'Отдыхает (можно звать в ДС или катку)',
-    hex: '#33676e',
+    hex: '#246b75',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(51, 103, 110, 0.42) 0%, rgba(23, 46, 50, 0.88) 100%)',
-      borderColor: 'rgba(116, 194, 204, 0.36)'
+      background: 'linear-gradient(135deg, rgba(36, 107, 117, 0.45) 0%, rgba(15, 35, 44, 0.90) 100%)',
+      borderColor: 'rgba(106, 203, 217, 0.38)'
     },
-    badge: 'bg-[#33676e]/55 text-[#c4ecf2] border border-[#74c2cc]/30',
+    badge: 'bg-[#246b75]/55 text-[#c4f1f7] border border-[#6acbd9]/30',
     icon: Coffee
   },
   hobby: {
     label: 'Хобби / Творчество',
     friendStatus: 'Занята творчеством / музыкой / рукоделием',
-    hex: '#694275',
+    hex: '#6b427a',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(105, 66, 117, 0.42) 0%, rgba(46, 29, 52, 0.88) 100%)',
-      borderColor: 'rgba(189, 134, 207, 0.36)'
+      background: 'linear-gradient(135deg, rgba(107, 66, 122, 0.45) 0%, rgba(30, 22, 42, 0.90) 100%)',
+      borderColor: 'rgba(191, 134, 212, 0.38)'
     },
-    badge: 'bg-[#694275]/55 text-[#ebd0f5] border border-[#bd86cf]/30',
+    badge: 'bg-[#6b427a]/55 text-[#edd2f7] border border-[#bf86d4]/30',
     icon: Palette
   },
   errands: {
     label: 'Дела / Поручения',
     friendStatus: 'Занята личными делами',
-    hex: '#855135',
+    hex: '#38638c',
     surfaceStyle: {
-      background: 'linear-gradient(135deg, rgba(133, 81, 53, 0.44) 0%, rgba(54, 33, 23, 0.88) 100%)',
-      borderColor: 'rgba(219, 148, 110, 0.38)'
+      background: 'linear-gradient(135deg, rgba(56, 99, 140, 0.45) 0%, rgba(18, 31, 46, 0.90) 100%)',
+      borderColor: 'rgba(133, 184, 232, 0.38)'
     },
-    badge: 'bg-[#855135]/55 text-[#f5d3c1] border border-[#db946e]/30',
+    badge: 'bg-[#38638c]/55 text-[#cfe8ff] border border-[#85b8e8]/30',
     icon: Briefcase
   }
 };
@@ -497,8 +498,8 @@ function groupScheduleBlocks(dayEvents) {
         })
         .join(', ');
       cardStyle = {
-        background: `linear-gradient(120deg, ${stops}, rgba(23, 27, 38, 0.90) 100%)`,
-        borderColor: `${uniqueColors[0]}88`
+        background: `linear-gradient(120deg, ${stops}, rgba(17, 25, 41, 0.92) 100%)`,
+        borderColor: `${uniqueColors[0]}99`
       };
     } else {
       const cat = CATEGORIES[b.events[0].category] || CATEGORIES.jku;
@@ -546,7 +547,7 @@ export default function App() {
     location: '',
     details: '',
     category: 'khpi',
-    isRecurring: false
+    isRecurring: true
   });
 
   const [newDeadline, setNewDeadline] = useState({ title: '', course: 'НТУ «ХПІ»', due: '' });
@@ -684,6 +685,15 @@ export default function App() {
     [selectedDayEvents]
   );
 
+  const sortedDeadlines = useMemo(() => {
+    return [...deadlines].sort((a, b) => Number(Boolean(a.done)) - Number(Boolean(b.done)));
+  }, [deadlines]);
+
+  const activeDeadlinesCount = useMemo(
+    () => deadlines.filter((d) => !d.done).length,
+    [deadlines]
+  );
+
   const currentStatus = useMemo(() => {
     const day = austriaNow.getDay();
     const mins = austriaNow.getHours() * 60 + austriaNow.getMinutes();
@@ -783,7 +793,12 @@ export default function App() {
   const handleAddDeadline = async (e) => {
     e.preventDefault();
     if (!newDeadline.title.trim()) return;
-    await addDoc(collection(db, 'deadlines'), { ...newDeadline, done: false });
+    await addDoc(collection(db, 'deadlines'), {
+      ...newDeadline,
+      title: newDeadline.title.trim(),
+      due: newDeadline.due.trim(),
+      done: false
+    });
     setNewDeadline({ title: '', course: 'НТУ «ХПІ»', due: '' });
   };
 
@@ -843,10 +858,10 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen text-[#ece6df] font-sans selection:bg-[#d99b52]/30 relative overflow-x-hidden"
+      className="min-h-screen text-[#e6eef5] font-sans selection:bg-[#6fa8dc]/30 relative overflow-x-hidden"
       style={{
         background:
-          'radial-gradient(ellipse at 18% 92%, rgba(214, 146, 74, 0.22) 0%, transparent 48%), radial-gradient(ellipse at 85% 88%, rgba(201, 132, 62, 0.18) 0%, transparent 45%), linear-gradient(180deg, #1b2230 0%, #232836 45%, #2a252a 78%, #302422 100%)'
+          'radial-gradient(ellipse at 20% 88%, rgba(232, 178, 102, 0.14) 0%, transparent 45%), radial-gradient(ellipse at 82% 20%, rgba(92, 138, 186, 0.16) 0%, transparent 50%), linear-gradient(180deg, #111927 0%, #162033 52%, #192233 100%)'
       }}
     >
       <style>{`
@@ -857,7 +872,7 @@ export default function App() {
         }
         @keyframes warmTwinkle {
           0%, 100% { opacity: 0.45; transform: scale(0.92); }
-          50% { opacity: 1; transform: scale(1.12); }
+          50% { opacity: 1; transform: scale(1.14); }
         }
         .snowflake-dot {
           animation-name: winterSnow;
@@ -871,12 +886,12 @@ export default function App() {
         }
       `}</style>
 
-      {/* Мягкий падающий снег */}
+      {/* Падающий снег */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
         {SNOWFLAKES.map((s) => (
           <span
             key={s.id}
-            className="snowflake-dot absolute top-0 rounded-full bg-[#f5efe6]"
+            className="snowflake-dot absolute top-0 rounded-full bg-[#e8f2fc]"
             style={{
               left: s.left,
               width: `${s.size}px`,
@@ -889,21 +904,21 @@ export default function App() {
         ))}
       </div>
 
-      {/* Верхняя панель + тёплая рождественская гирлянда */}
-      <header className="border-b border-[#f0be7a]/20 bg-[#1a202c]/85 backdrop-blur-md sticky top-0 z-30">
+      {/* Шапка + гирлянда */}
+      <header className="border-b border-[#8bb8e3]/15 bg-[#111826]/85 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d99b52]/35 to-[#3c3430] border border-[#f0be7a]/40 flex items-center justify-center shadow-[0_0_16px_rgba(240,190,122,0.25)]">
-              <Snowflake className="w-5 h-5 text-[#fae0b8]" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2b4c70] to-[#172638] border border-[#8bb8e3]/35 flex items-center justify-center shadow-[0_0_16px_rgba(139,184,227,0.2)]">
+              <Snowflake className="w-5 h-5 text-[#d6ecff]" />
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-tight text-[#fbf4ea] flex items-center gap-2">
+              <h1 className="text-lg font-bold tracking-tight text-[#f2f7fc] flex items-center gap-2">
                 Amaliia · Winter Study OS
-                <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-[#2a2c38] border border-[#f0be7a]/25 text-[#e6cfa8]">
+                <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-[#1c283d] border border-[#8bb8e3]/25 text-[#c5dcf2]">
                   AT · {austriaNow.toLocaleTimeString('de-AT', { hour: '2-digit', minute: '2-digit' })}
                 </span>
               </h1>
-              <p className="text-xs text-[#b5b0b8]">
+              <p className="text-xs text-[#9cb2c7]">
                 JKU Linz (B2 + Physik) · НТУ «ХПІ» · ÖBB Bad Schallerbach ↔ Linz
               </p>
             </div>
@@ -913,7 +928,7 @@ export default function App() {
             {isAdmin ? (
               <button
                 onClick={() => setIsAdmin(false)}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#4a392a]/80 border border-[#e6b373]/50 text-[#fae3c0] text-sm font-medium hover:bg-[#5c4734] transition"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#24405e] border border-[#8bb8e3]/45 text-[#e6f2fc] text-sm font-medium hover:bg-[#2d5075] transition"
               >
                 <Unlock className="w-4 h-4" />
                 Режим Амалии (Выйти)
@@ -921,9 +936,9 @@ export default function App() {
             ) : (
               <button
                 onClick={() => setShowPinModal(true)}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#252a38]/90 border border-[#f0be7a]/30 text-[#f2e4cf] text-sm font-medium hover:bg-[#313647] transition"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#1a2538]/90 border border-[#8bb8e3]/25 text-[#dceaf7] text-sm font-medium hover:bg-[#22314a] transition"
               >
-                <Lock className="w-4 h-4 text-[#f0be7a]" />
+                <Lock className="w-4 h-4 text-[#ffd48a]" />
                 Я Амалия
               </button>
             )}
@@ -931,12 +946,12 @@ export default function App() {
         </div>
 
         {/* Тёплая гирлянда под шапкой */}
-        <div className="relative h-4 overflow-hidden border-t border-[#f0be7a]/10 bg-[#151924]/70">
+        <div className="relative h-4 overflow-hidden border-t border-[#ffd48a]/10 bg-[#0e1420]/75">
           <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 18">
             <path
               d="M0,2 Q150,15 300,3 T600,3 T900,3 T1200,3"
               fill="none"
-              stroke="rgba(240, 190, 122, 0.28)"
+              stroke="rgba(255, 212, 138, 0.25)"
               strokeWidth="1.2"
             />
           </svg>
@@ -946,7 +961,7 @@ export default function App() {
                 key={b}
                 className="garland-bulb w-2 h-2 rounded-full"
                 style={{
-                  backgroundColor: b % 2 === 0 ? '#ffd28a' : '#f5a95b',
+                  backgroundColor: b % 2 === 0 ? '#ffd48a' : '#f5b064',
                   boxShadow: '0 0 8px 2px rgba(255, 206, 128, 0.75)',
                   marginTop: b % 2 === 0 ? '3px' : '-2px',
                   animationDuration: `${2.2 + (b % 4) * 0.6}s`,
@@ -959,23 +974,23 @@ export default function App() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-6 space-y-6 relative z-10">
-        {/* Виджет текущего статуса */}
-        <div className="rounded-2xl p-4 border border-[#f0be7a]/25 bg-gradient-to-r from-[#232736]/85 via-[#282733]/85 to-[#2e2629]/85 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg shadow-black/20">
+        {/* Текущий статус */}
+        <div className="rounded-2xl p-4 border border-[#8bb8e3]/20 bg-gradient-to-r from-[#172236]/90 via-[#1a263b]/90 to-[#162033]/90 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg shadow-black/25">
           <div className="flex items-center gap-3">
             <span
               className={`w-3 h-3 rounded-full animate-pulse ${
                 currentStatus.busy
-                  ? 'bg-[#e8b36b] shadow-[0_0_10px_#e8b36b]'
-                  : 'bg-[#9fd1c9] shadow-[0_0_10px_#9fd1c9]'
+                  ? 'bg-[#ffd48a] shadow-[0_0_10px_#ffd48a]'
+                  : 'bg-[#8be0cf] shadow-[0_0_10px_#8be0cf]'
               }`}
             />
             <div>
-              <div className="text-xs uppercase tracking-wider text-[#c4b4a1]">Статус прямо сейчас</div>
-              <div className="font-semibold text-[#fbf4ea]">{currentStatus.label}</div>
-              <div className="text-xs text-[#d6cabd]">{currentStatus.detail}</div>
+              <div className="text-xs uppercase tracking-wider text-[#8fa7bd]">Статус прямо сейчас</div>
+              <div className="font-semibold text-[#f2f7fc]">{currentStatus.label}</div>
+              <div className="text-xs text-[#b8cde0]">{currentStatus.detail}</div>
             </div>
           </div>
-          <div className="text-xs text-[#d4c5b4] bg-[#191d26]/80 px-3 py-2 rounded-xl border border-[#f0be7a]/20">
+          <div className="text-xs text-[#b8cde0] bg-[#101826]/85 px-3 py-2 rounded-xl border border-[#8bb8e3]/20">
             {isAdmin
               ? `Входящих пингов от друзей: ${pings.length}`
               : 'Гостевой режим просмотра · редактирование закрыто'}
@@ -983,24 +998,24 @@ export default function App() {
         </div>
 
         {/* Навигация по неделям */}
-        <div className="bg-[#202432]/85 border border-[#f0be7a]/20 backdrop-blur-md rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 backdrop-blur-md rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setWeekOffset((w) => w - 1)}
-              className="p-2 rounded-xl bg-[#2a2f40] hover:bg-[#363b4f] text-[#f2e6d5] transition"
+              className="p-2 rounded-xl bg-[#1e2c45] hover:bg-[#273959] text-[#e6f2fc] transition"
               title="Предыдущая неделя"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <div className="px-3 py-1.5 rounded-xl bg-[#181b26] border border-[#f0be7a]/20 flex items-center gap-2 text-sm font-medium text-[#f7ede0]">
-              <CalendarIcon className="w-4 h-4 text-[#f0be7a]" />
+            <div className="px-3 py-1.5 rounded-xl bg-[#101826] border border-[#8bb8e3]/20 flex items-center gap-2 text-sm font-medium text-[#f2f7fc]">
+              <CalendarIcon className="w-4 h-4 text-[#8bb8e3]" />
               <span>
                 KW {activeKW} · с {weekDatesMap[1]}
               </span>
             </div>
             <button
               onClick={() => setWeekOffset((w) => w + 1)}
-              className="p-2 rounded-xl bg-[#2a2f40] hover:bg-[#363b4f] text-[#f2e6d5] transition"
+              className="p-2 rounded-xl bg-[#1e2c45] hover:bg-[#273959] text-[#e6f2fc] transition"
               title="Следующая неделя"
             >
               <ChevronRight className="w-4 h-4" />
@@ -1012,22 +1027,22 @@ export default function App() {
               onClick={() => setWeekOffset(0)}
               className={`px-3 py-1.5 rounded-lg border transition ${
                 weekOffset === 0
-                  ? 'bg-[#4f3c2b] border-[#e6b373]/60 text-[#fdf3e6]'
-                  : 'bg-[#262b3b] border-[#f0be7a]/20 text-[#d1c5b8] hover:bg-[#303547]'
+                  ? 'bg-[#2a4a6e] border-[#8bb8e3]/60 text-[#f5faff]'
+                  : 'bg-[#1c283d] border-[#8bb8e3]/20 text-[#b8cde0] hover:bg-[#24344f]'
               }`}
             >
               Текущая неделя
             </button>
             <button
               onClick={() => setWeekOffset((w) => w + 1)}
-              className="px-3 py-1.5 rounded-lg bg-[#262b3b] border border-[#f0be7a]/20 text-[#d1c5b8] hover:bg-[#303547] transition"
+              className="px-3 py-1.5 rounded-lg bg-[#1c283d] border border-[#8bb8e3]/20 text-[#b8cde0] hover:bg-[#24344f] transition"
             >
               +1 неделя
             </button>
           </div>
         </div>
 
-        {/* Переключатель дней недели */}
+        {/* Дни недели */}
         <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
           {DAYS.map((d) => {
             const count = weekEvents.filter((e) => e.day === d.id).length;
@@ -1038,15 +1053,15 @@ export default function App() {
                 onClick={() => setSelectedDay(d.id)}
                 className={`p-2.5 rounded-xl border text-center transition flex flex-col items-center gap-1 backdrop-blur-sm ${
                   active
-                    ? 'bg-gradient-to-b from-[#4a392b]/90 to-[#332927]/90 border-[#f0be7a]/65 text-[#fdf4e7] shadow-[0_0_15px_rgba(240,190,122,0.18)]'
-                    : 'bg-[#202432]/80 border-[#f0be7a]/15 text-[#b5adb5] hover:border-[#f0be7a]/35 hover:text-[#f2e6d5]'
+                    ? 'bg-gradient-to-b from-[#2c4e73]/90 to-[#1c2f47]/90 border-[#8bb8e3]/65 text-[#f5faff] shadow-[0_0_15px_rgba(139,184,227,0.18)]'
+                    : 'bg-[#162033]/80 border-[#8bb8e3]/15 text-[#94acc2] hover:border-[#8bb8e3]/35 hover:text-[#e6f2fc]'
                 }`}
               >
                 <span className="text-xs font-bold">{d.short}</span>
                 <span className="text-[11px] opacity-80">{weekDatesMap[d.id]}</span>
                 <span
                   className={`text-[10px] px-1.5 rounded-full ${
-                    count > 0 ? 'bg-[#6b4f35]/70 text-[#fae3c0]' : 'bg-[#181b26] text-[#7a7680]'
+                    count > 0 ? 'bg-[#365b85]/75 text-[#e6f3ff]' : 'bg-[#101826] text-[#647b91]'
                   }`}
                 >
                   {count}
@@ -1061,16 +1076,16 @@ export default function App() {
           {/* Левая колонка: Расписание */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-[#fbf4ea]">
+              <h2 className="text-base font-semibold text-[#f2f7fc]">
                 {DAYS.find((d) => d.id === selectedDay)?.full} ({weekDatesMap[selectedDay]})
               </h2>
-              <span className="text-xs text-[#bfb3a6]">
+              <span className="text-xs text-[#94acc2]">
                 Событий: {selectedDayEvents.length}
               </span>
             </div>
 
             {scheduleBlocks.length === 0 ? (
-              <div className="bg-[#202432]/85 border border-[#f0be7a]/20 rounded-2xl p-8 text-center text-[#c7bab0] text-sm">
+              <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 rounded-2xl p-8 text-center text-[#b8cde0] text-sm">
                 На этот день пары и поездки не запланированы — можно спокойно закрывать лабы ХПІ, учить физику или отдыхать.
               </div>
             ) : (
@@ -1085,7 +1100,7 @@ export default function App() {
                       className="rounded-2xl border backdrop-blur-md shadow-lg shadow-black/25 overflow-hidden transition"
                     >
                       {block.isMerged && (
-                        <div className="px-4 py-1.5 text-[11px] font-medium text-[#f5e8d7] bg-black/25 border-b border-white/10 flex items-center justify-between">
+                        <div className="px-4 py-1.5 text-[11px] font-medium text-[#e6f2fc] bg-black/25 border-b border-white/10 flex items-center justify-between">
                           <span>Связанные занятия · {block.startLabel} – {block.endLabel}</span>
                           <span className="opacity-75">плавный переход</span>
                         </div>
@@ -1112,27 +1127,27 @@ export default function App() {
                             >
                               <div className="space-y-1 min-w-0">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <span className="font-mono text-sm font-bold text-[#fbf4ea]">
+                                  <span className="font-mono text-sm font-bold text-[#f5faff]">
                                     {ev.start} – {ev.end}
                                   </span>
                                   <span className={`text-xs px-2 py-0.5 rounded-md font-medium ${cat.badge}`}>
                                     {cat.label}
                                   </span>
                                   {ev.isRecurring && (
-                                    <span className="text-[11px] text-[#cbbeb0] flex items-center gap-1">
+                                    <span className="text-[11px] text-[#a9c2d9] flex items-center gap-1">
                                       <Repeat className="w-3 h-3" /> еженедельно
                                     </span>
                                   )}
                                 </div>
-                                <h3 className="text-base font-semibold text-[#fdf7f0] flex items-center gap-2">
-                                  <IconComponent className="w-4 h-4 shrink-0 text-[#f2d5ad]" />
+                                <h3 className="text-base font-semibold text-[#ffffff] flex items-center gap-2">
+                                  <IconComponent className="w-4 h-4 shrink-0 text-[#c9e4fc]" />
                                   <span>{ev.title}</span>
                                 </h3>
                                 {ev.location && (
-                                  <div className="text-xs text-[#e3d6c8] font-medium">{ev.location}</div>
+                                  <div className="text-xs text-[#d2e4f5] font-medium">{ev.location}</div>
                                 )}
                                 {ev.details && (
-                                  <p className="text-xs text-[#c4b7a9] leading-relaxed pt-0.5">{ev.details}</p>
+                                  <p className="text-xs text-[#a9c2d9] leading-relaxed pt-0.5">{ev.details}</p>
                                 )}
                               </div>
 
@@ -1142,7 +1157,7 @@ export default function App() {
                                     <button
                                       onClick={() => handleHideForThisWeek(ev)}
                                       title="Скрыть только на эту неделю"
-                                      className="p-2 rounded-lg bg-black/30 hover:bg-black/50 text-[#e3d6c8] transition"
+                                      className="p-2 rounded-lg bg-black/30 hover:bg-black/50 text-[#d2e4f5] transition"
                                     >
                                       <EyeOff className="w-4 h-4" />
                                     </button>
@@ -1150,7 +1165,7 @@ export default function App() {
                                   <button
                                     onClick={() => handleDeleteEvent(ev)}
                                     title="Удалить полностью"
-                                    className="p-2 rounded-lg bg-black/30 hover:bg-rose-950/60 text-[#e3a8b3] transition"
+                                    className="p-2 rounded-lg bg-black/30 hover:bg-rose-950/60 text-[#f2b6c2] transition"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
@@ -1178,22 +1193,22 @@ export default function App() {
                               >
                                 <div className="space-y-1 min-w-0">
                                   <div className="flex flex-wrap items-center gap-2">
-                                    <span className="font-mono text-xs font-bold text-[#fdf7f0]">
+                                    <span className="font-mono text-xs font-bold text-[#ffffff]">
                                       {inner.start} – {inner.end}
                                     </span>
                                     <span className={`text-[11px] px-2 py-0.5 rounded-md font-medium ${innerCat.badge}`}>
                                       {innerCat.label}
                                     </span>
-                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-black/30 text-[#f5e8d7]">
+                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-black/30 text-[#e6f2fc]">
                                       внутри блока
                                     </span>
                                   </div>
-                                  <div className="text-sm font-semibold text-[#fdf7f0] flex items-center gap-2">
-                                    <InnerIcon className="w-4 h-4 shrink-0 text-[#fae3c0]" />
+                                  <div className="text-sm font-semibold text-[#ffffff] flex items-center gap-2">
+                                    <InnerIcon className="w-4 h-4 shrink-0 text-[#e6f2fc]" />
                                     <span>{inner.title}</span>
                                   </div>
                                   {(inner.location || inner.details) && (
-                                    <div className="text-xs text-[#ebdfd1]">
+                                    <div className="text-xs text-[#dcebf7]">
                                       {inner.location}
                                       {inner.location && inner.details ? ' · ' : ''}
                                       <span className="opacity-85">{inner.details}</span>
@@ -1207,7 +1222,7 @@ export default function App() {
                                       <button
                                         onClick={() => handleHideForThisWeek(inner)}
                                         title="Скрыть только на эту неделю"
-                                        className="p-1.5 rounded-lg bg-black/35 hover:bg-black/55 text-[#f5e8d7] transition"
+                                        className="p-1.5 rounded-lg bg-black/35 hover:bg-black/55 text-[#e6f2fc] transition"
                                       >
                                         <EyeOff className="w-3.5 h-3.5" />
                                       </button>
@@ -1215,7 +1230,7 @@ export default function App() {
                                     <button
                                       onClick={() => handleDeleteEvent(inner)}
                                       title="Удалить полностью"
-                                      className="p-1.5 rounded-lg bg-black/35 hover:bg-rose-950/60 text-[#e3a8b3] transition"
+                                      className="p-1.5 rounded-lg bg-black/35 hover:bg-rose-950/60 text-[#f2b6c2] transition"
                                     >
                                       <Trash2 className="w-3.5 h-3.5" />
                                     </button>
@@ -1232,19 +1247,20 @@ export default function App() {
               </div>
             )}
 
+            {/* Свободные окна */}
             {isAdmin && (
-              <div className="bg-[#202432]/85 border border-[#f0be7a]/20 rounded-2xl p-4 space-y-2">
-                <div className="text-xs font-semibold uppercase tracking-wider text-[#f0be7a]">
+              <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 rounded-2xl p-4 space-y-2">
+                <div className="text-xs font-semibold uppercase tracking-wider text-[#9ec7ed]">
                   Свободные окна для учёбы (ХПІ / Физика JKU)
                 </div>
                 {freeWindows.length === 0 ? (
-                  <p className="text-xs text-[#b5adb5]">Плотный день, больших окон между парами нет.</p>
+                  <p className="text-xs text-[#94acc2]">Плотный день, больших окон между парами нет.</p>
                 ) : (
                   <div className="flex flex-wrap gap-2">
                     {freeWindows.map((w, i) => (
                       <span
                         key={i}
-                        className="text-xs px-3 py-1.5 rounded-xl bg-[#181b26] border border-[#f0be7a]/20 text-[#ebdfd1]"
+                        className="text-xs px-3 py-1.5 rounded-xl bg-[#101826] border border-[#8bb8e3]/20 text-[#dceaf7]"
                       >
                         {w.from} – {w.to} ({Math.floor(w.mins / 60)}ч {w.mins % 60}м)
                       </span>
@@ -1254,20 +1270,21 @@ export default function App() {
               </div>
             )}
 
+            {/* Форма добавления события с заметным переключателем повтора */}
             {isAdmin && (
               <form
                 onSubmit={handleAddEvent}
-                className="bg-[#202432]/85 border border-[#f0be7a]/20 rounded-2xl p-4 space-y-3"
+                className="bg-[#162033]/90 border border-[#8bb8e3]/25 rounded-2xl p-4 space-y-3.5"
               >
-                <div className="text-sm font-semibold text-[#fbf4ea] flex items-center gap-2">
-                  <Plus className="w-4 h-4 text-[#f0be7a]" />
+                <div className="text-sm font-semibold text-[#f2f7fc] flex items-center gap-2">
+                  <Plus className="w-4 h-4 text-[#8bb8e3]" />
                   Добавить пару, поезд, сон или отдых
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <select
                     value={newEvent.day}
                     onChange={(e) => setNewEvent({ ...newEvent, day: Number(e.target.value) })}
-                    className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   >
                     {DAYS.map((d) => (
                       <option key={d.id} value={d.id}>
@@ -1279,18 +1296,18 @@ export default function App() {
                     type="time"
                     value={newEvent.start}
                     onChange={(e) => setNewEvent({ ...newEvent, start: e.target.value })}
-                    className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   />
                   <input
                     type="time"
                     value={newEvent.end}
                     onChange={(e) => setNewEvent({ ...newEvent, end: e.target.value })}
-                    className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   />
                   <select
                     value={newEvent.category}
                     onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
-                    className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   >
                     {Object.entries(CATEGORIES).map(([k, v]) => (
                       <option key={k} value={k}>
@@ -1305,14 +1322,14 @@ export default function App() {
                     placeholder="Название (если пусто — подставится категория)"
                     value={newEvent.title}
                     onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                    className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   />
                   <input
                     type="text"
                     placeholder="Место / Аудитория / Игра"
                     value={newEvent.location}
                     onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
-                    className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   />
                 </div>
                 <input
@@ -1320,21 +1337,40 @@ export default function App() {
                   placeholder="Заметки (номер поезда, пересадка, тема)"
                   value={newEvent.details}
                   onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
-                  className="w-full bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                  className="w-full bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                 />
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-                  <label className="flex items-center gap-2 text-xs text-[#d1c5b8] cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={newEvent.isRecurring}
-                      onChange={(e) => setNewEvent({ ...newEvent, isRecurring: e.target.checked })}
-                      className="rounded border-[#f0be7a]/30 bg-[#181b26]"
-                    />
-                    Повторять каждую неделю (иначе только на KW {activeKW})
-                  </label>
+
+                {/* Крупная и чёткая плашка «Повторять каждую неделю» */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setNewEvent({ ...newEvent, isRecurring: !newEvent.isRecurring })}
+                    className={`flex items-center justify-between sm:justify-start gap-3 px-3.5 py-2.5 rounded-xl border text-left transition ${
+                      newEvent.isRecurring
+                        ? 'bg-[#254569] border-[#8bb8e3] text-[#ffffff] shadow-[0_0_12px_rgba(139,184,227,0.2)]'
+                        : 'bg-[#101826] border-[#8bb8e3]/25 text-[#a9c2d9] hover:border-[#8bb8e3]/50'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2 text-xs font-semibold">
+                      <Repeat className="w-4 h-4 text-[#9ec7ed]" />
+                      {newEvent.isRecurring
+                        ? 'Повторять каждую неделю: ВКЛ'
+                        : `Только на эту неделю (KW ${activeKW})`}
+                    </span>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                        newEvent.isRecurring
+                          ? 'bg-[#8bb8e3]/25 text-[#e6f3ff]'
+                          : 'bg-[#1d2a40] text-[#8fa7bd]'
+                      }`}
+                    >
+                      {newEvent.isRecurring ? 'Еженедельно' : 'Разово'}
+                    </span>
+                  </button>
+
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-xl bg-[#543f2d] hover:bg-[#694f38] border border-[#e6b373]/50 text-[#fdf3e6] text-xs font-semibold transition"
+                    className="px-5 py-2.5 rounded-xl bg-[#2d527a] hover:bg-[#386596] border border-[#8bb8e3]/50 text-[#ffffff] text-xs font-semibold transition"
                   >
                     Сохранить в облако
                   </button>
@@ -1343,21 +1379,21 @@ export default function App() {
             )}
           </div>
 
-          {/* Правая колонка: Пинги, Ёлка друзей, Таймер, Дедлайны */}
+          {/* Правая колонка */}
           <div className="space-y-5">
-            {/* Пингануть Амалию */}
-            <div className="bg-[#202432]/85 border border-[#f0be7a]/20 backdrop-blur-md rounded-2xl p-4 space-y-3">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#fbf4ea]">
-                <Bell className="w-4 h-4 text-[#f0be7a]" />
+            {/* Пингануть Амалию (без Вани) */}
+            <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 backdrop-blur-md rounded-2xl p-4 space-y-3">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#f2f7fc]">
+                <Bell className="w-4 h-4 text-[#ffd48a]" />
                 Пингануть Амалию
               </div>
 
               <input
                 type="text"
-                placeholder="Твоё имя (Настя, Варя, Стеша...)"
+                placeholder="Твоё имя (Настя, Варя, Аріна...)"
                 value={friendName}
                 onChange={(e) => setFriendName(e.target.value)}
-                className="w-full bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                className="w-full bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
               />
 
               <div className="space-y-1.5">
@@ -1366,7 +1402,7 @@ export default function App() {
                     key={idx}
                     type="button"
                     onClick={() => sendPing(q)}
-                    className="w-full text-left text-xs p-3 rounded-xl bg-gradient-to-r from-[#3b302a] to-[#292733] hover:from-[#4d3e35] hover:to-[#353242] border border-[#f0be7a]/30 text-[#f7ede0] transition leading-snug"
+                    className="w-full text-left text-xs p-3 rounded-xl bg-gradient-to-r from-[#223452] to-[#19263d] hover:from-[#2b4269] hover:to-[#20314f] border border-[#8bb8e3]/30 text-[#f2f7fc] transition leading-snug"
                   >
                     {q}
                   </button>
@@ -1379,12 +1415,12 @@ export default function App() {
                   placeholder="Своё сообщение..."
                   value={pingMessage}
                   onChange={(e) => setPingMessage(e.target.value)}
-                  className="flex-1 bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                  className="flex-1 bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                 />
                 <button
                   type="button"
                   onClick={() => sendPing()}
-                  className="px-3 py-2 rounded-xl bg-[#543f2d] hover:bg-[#694f38] border border-[#e6b373]/50 text-[#fdf3e6] transition"
+                  className="px-3 py-2 rounded-xl bg-[#2d527a] hover:bg-[#386596] border border-[#8bb8e3]/50 text-[#ffffff] transition"
                   title="Отправить"
                 >
                   <Send className="w-4 h-4" />
@@ -1392,56 +1428,45 @@ export default function App() {
               </div>
 
               {pingSent && (
-                <div className="text-xs text-[#9fd1c9] flex items-center gap-1.5">
+                <div className="text-xs text-[#8be0cf] flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4" />
                   Маячок улетел Амалии!
                 </div>
               )}
             </div>
 
-            {/* Интерактивная рождественская ёлка друзей */}
-            <div className="bg-gradient-to-b from-[#1e2433]/90 to-[#292328]/90 border border-[#f0be7a]/25 backdrop-blur-md rounded-2xl p-4 space-y-3 shadow-lg shadow-black/25">
+            {/* Ёлка друзей */}
+            <div className="bg-gradient-to-b from-[#172236]/90 to-[#131c2e]/90 border border-[#8bb8e3]/25 backdrop-blur-md rounded-2xl p-4 space-y-3 shadow-lg shadow-black/25">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm font-semibold text-[#fbf4ea]">
-                  <Sparkles className="w-4 h-4 text-[#ffd28a]" />
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#f2f7fc]">
+                  <Sparkles className="w-4 h-4 text-[#ffd48a]" />
                   Ёлка друзей
                 </div>
-                <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#3d3128] border border-[#f0be7a]/30 text-[#fae0b8]">
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#223452] border border-[#8bb8e3]/30 text-[#d8ebfc]">
                   игрушек: {treeOrnaments.length}
                 </span>
               </div>
 
-              {/* Визуальная ёлка со светящимися гирляндами и игрушками */}
-              <div className="relative h-64 rounded-xl bg-gradient-to-b from-[#161b26] via-[#1c202c] to-[#262022] border border-[#f0be7a]/15 overflow-hidden flex items-center justify-center">
-                {/* Мягкое тёплое сияние за ёлкой */}
+              <div className="relative h-64 rounded-xl bg-gradient-to-b from-[#0e1522] via-[#131d30] to-[#172236] border border-[#8bb8e3]/15 overflow-hidden flex items-center justify-center">
                 <div
                   className="absolute w-44 h-44 rounded-full pointer-events-none"
                   style={{
-                    background: 'radial-gradient(circle, rgba(255, 206, 128, 0.22) 0%, transparent 70%)'
+                    background: 'radial-gradient(circle, rgba(255, 212, 138, 0.18) 0%, transparent 70%)'
                   }}
                 />
 
-                {/* SVG силуэт ёлки */}
                 <svg viewBox="0 0 200 220" className="w-52 h-60 drop-shadow-[0_6px_14px_rgba(0,0,0,0.6)]">
-                  {/* Звезда на макушке */}
-                  <circle cx="100" cy="18" r="7" fill="#ffd98e" opacity="0.9" />
+                  <circle cx="100" cy="18" r="7" fill="#ffd98e" opacity="0.95" />
                   <circle cx="100" cy="18" r="14" fill="#ffd98e" opacity="0.22" />
-
-                  {/* Ствол */}
-                  <rect x="91" y="182" width="18" height="24" rx="3" fill="#4a3525" />
-
-                  {/* Ярусы хвои */}
-                  <polygon points="100,24 62,76 138,76" fill="#213834" stroke="#365952" strokeWidth="1" />
-                  <polygon points="100,56 50,124 150,124" fill="#1d332f" stroke="#365952" strokeWidth="1" />
-                  <polygon points="100,96 36,184 164,184" fill="#192c29" stroke="#365952" strokeWidth="1" />
-
-                  {/* Тёплые нити гирлянды на ёлке */}
-                  <path d="M72,66 Q100,78 128,66" fill="none" stroke="#ffd28a" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.8" />
-                  <path d="M58,112 Q100,128 142,112" fill="none" stroke="#ffd28a" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.8" />
-                  <path d="M46,164 Q100,182 154,164" fill="none" stroke="#ffd28a" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.8" />
+                  <rect x="91" y="182" width="18" height="24" rx="3" fill="#2c3e59" />
+                  <polygon points="100,24 62,76 138,76" fill="#1b3838" stroke="#3c6e6e" strokeWidth="1" />
+                  <polygon points="100,56 50,124 150,124" fill="#173233" stroke="#3c6e6e" strokeWidth="1" />
+                  <polygon points="100,96 36,184 164,184" fill="#132b2c" stroke="#3c6e6e" strokeWidth="1" />
+                  <path d="M72,66 Q100,78 128,66" fill="none" stroke="#ffd48a" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.85" />
+                  <path d="M58,112 Q100,128 142,112" fill="none" stroke="#ffd48a" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.85" />
+                  <path d="M46,164 Q100,182 154,164" fill="none" stroke="#ffd48a" strokeWidth="1.2" strokeDasharray="2 4" opacity="0.85" />
                 </svg>
 
-                {/* Развешанные игрушки друзей */}
                 {treeOrnaments.slice(0, TREE_SLOTS.length).map((item, idx) => {
                   const slot = TREE_SLOTS[idx];
                   const meta = ORNAMENTS.find((o) => o.id === item.type) || ORNAMENTS[0];
@@ -1465,7 +1490,7 @@ export default function App() {
                       >
                         {meta.symbol}
                       </div>
-                      <span className="mt-0.5 px-1.5 py-0.2 rounded bg-black/70 text-[9px] text-[#fae8cc] whitespace-nowrap max-w-[74px] truncate border border-[#f0be7a]/25">
+                      <span className="mt-0.5 px-1.5 py-0.2 rounded bg-[#0d1420]/85 text-[9px] text-[#e6f2fc] whitespace-nowrap max-w-[74px] truncate border border-[#8bb8e3]/25">
                         {item.author}
                       </span>
                       {isAdmin && (
@@ -1483,7 +1508,6 @@ export default function App() {
                 })}
               </div>
 
-              {/* Форма выбора игрушки (из 5 вариантов) и имени */}
               <form onSubmit={handleHangOrnament} className="space-y-2.5">
                 <div className="grid grid-cols-5 gap-1.5">
                   {ORNAMENTS.map((orn) => {
@@ -1495,8 +1519,8 @@ export default function App() {
                         onClick={() => setSelectedOrnamentType(orn.id)}
                         className={`p-1.5 rounded-xl border text-center transition flex flex-col items-center gap-0.5 ${
                           active
-                            ? 'bg-[#4a392a] border-[#ffd28a] text-[#fff6e8] shadow-[0_0_10px_rgba(255,210,138,0.25)]'
-                            : 'bg-[#181b26] border-[#f0be7a]/15 text-[#c7bab0] hover:border-[#f0be7a]/40'
+                            ? 'bg-[#2a4a6e] border-[#ffd48a] text-[#ffffff] shadow-[0_0_10px_rgba(255,212,138,0.22)]'
+                            : 'bg-[#101826] border-[#8bb8e3]/15 text-[#b8cde0] hover:border-[#8bb8e3]/40'
                         }`}
                       >
                         <span className="text-xs font-bold leading-tight">{orn.symbol}</span>
@@ -1513,60 +1537,60 @@ export default function App() {
                     placeholder="Подпиши игрушку (имя)..."
                     value={ornamentAuthor}
                     onChange={(e) => setOrnamentAuthor(e.target.value)}
-                    className="flex-1 bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="flex-1 bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   />
                   <button
                     type="submit"
-                    className="px-3 py-2 rounded-xl bg-[#543f2d] hover:bg-[#694f38] border border-[#e6b373]/50 text-[#fdf3e6] text-xs font-semibold transition whitespace-nowrap"
+                    className="px-3 py-2 rounded-xl bg-[#2d527a] hover:bg-[#386596] border border-[#8bb8e3]/50 text-[#ffffff] text-xs font-semibold transition whitespace-nowrap"
                   >
                     Повесить
                   </button>
                 </div>
 
                 {ornamentAdded && (
-                  <div className="text-xs text-[#fae0b8] flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#ffd28a]" />
+                  <div className="text-xs text-[#ffd48a] flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
                     Игрушка теперь светится на ёлке!
                   </div>
                 )}
               </form>
             </div>
 
-            {/* Входящие пинги (только для Амалии) */}
+            {/* Входящие пинги */}
             {isAdmin && (
-              <div className="bg-[#202432]/85 border border-[#f0be7a]/30 rounded-2xl p-4 space-y-3">
+              <div className="bg-[#162033]/85 border border-[#8bb8e3]/25 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-[#fbf4ea]">
-                    <MessageSquare className="w-4 h-4 text-[#f0be7a]" />
+                  <div className="flex items-center gap-2 text-sm font-semibold text-[#f2f7fc]">
+                    <MessageSquare className="w-4 h-4 text-[#8bb8e3]" />
                     Входящие от друзей
                   </div>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[#4a392a] text-[#fae0b8]">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[#223452] text-[#d8ebfc]">
                     {pings.length}
                   </span>
                 </div>
                 {pings.length === 0 ? (
-                  <p className="text-xs text-[#b5adb5]">Пока новых сообщений нет.</p>
+                  <p className="text-xs text-[#94acc2]">Пока новых сообщений нет.</p>
                 ) : (
                   <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                     {pings.map((p) => (
                       <div
                         key={p.id}
-                        className="p-2.5 rounded-xl bg-[#181b26] border border-[#f0be7a]/20 text-xs space-y-1"
+                        className="p-2.5 rounded-xl bg-[#101826] border border-[#8bb8e3]/20 text-xs space-y-1"
                       >
-                        <div className="flex items-center justify-between text-[#b5adb5]">
-                          <span className="font-semibold text-[#f0be7a]">{p.from}</span>
+                        <div className="flex items-center justify-between text-[#94acc2]">
+                          <span className="font-semibold text-[#9ec7ed]">{p.from}</span>
                           <div className="flex items-center gap-2">
                             <span>{p.timeLabel}</span>
                             <button
                               onClick={() => deletePing(p.id)}
-                              className="text-[#8a828c] hover:text-[#e3a8b3]"
+                              className="text-[#728ba3] hover:text-[#f2b6c2]"
                               title="Удалить"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
                           </div>
                         </div>
-                        <p className="text-[#ece6df] leading-snug">{p.message}</p>
+                        <p className="text-[#e6eef5] leading-snug">{p.message}</p>
                       </div>
                     ))}
                   </div>
@@ -1574,12 +1598,12 @@ export default function App() {
               </div>
             )}
 
-            {/* Таймер фокуса (только для Амалии) */}
+            {/* Таймер фокуса */}
             {isAdmin && (
-              <div className="bg-[#202432]/85 border border-[#f0be7a]/20 rounded-2xl p-4 space-y-3">
+              <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 rounded-2xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-[#fbf4ea]">
-                    <Clock className="w-4 h-4 text-[#f0be7a]" />
+                  <div className="flex items-center gap-2 text-sm font-semibold text-[#f2f7fc]">
+                    <Clock className="w-4 h-4 text-[#8bb8e3]" />
                     Таймер фокуса
                   </div>
                   <div className="flex items-center gap-1">
@@ -1589,13 +1613,13 @@ export default function App() {
                       max="300"
                       value={customMinutes}
                       onChange={(e) => applyCustomMinutes(e.target.value)}
-                      className="w-16 bg-[#181b26] border border-[#f0be7a]/20 rounded-lg px-2 py-1 text-xs text-[#f2e6d5] text-center"
+                      className="w-16 bg-[#101826] border border-[#8bb8e3]/25 rounded-lg px-2 py-1 text-xs text-[#f2f7fc] text-center"
                     />
-                    <span className="text-xs text-[#b5adb5]">мин</span>
+                    <span className="text-xs text-[#94acc2]">мин</span>
                   </div>
                 </div>
 
-                <div className="text-3xl font-mono font-bold text-center py-2 text-[#fbf4ea] tracking-wider">
+                <div className="text-3xl font-mono font-bold text-center py-2 text-[#ffffff] tracking-wider">
                   {formattedTimer}
                 </div>
 
@@ -1605,7 +1629,7 @@ export default function App() {
                       key={m}
                       type="button"
                       onClick={() => applyCustomMinutes(m)}
-                      className="px-2.5 py-1 rounded-lg bg-[#181b26] hover:bg-[#2a2f40] border border-[#f0be7a]/20 text-xs text-[#d1c5b8]"
+                      className="px-2.5 py-1 rounded-lg bg-[#101826] hover:bg-[#1d2b42] border border-[#8bb8e3]/20 text-xs text-[#b8cde0]"
                     >
                       {m}м
                     </button>
@@ -1616,7 +1640,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setTimerRunning((r) => !r)}
-                    className="flex-1 py-2 rounded-xl bg-[#543f2d] hover:bg-[#694f38] border border-[#e6b373]/50 text-[#fdf3e6] text-xs font-semibold flex items-center justify-center gap-1.5 transition"
+                    className="flex-1 py-2 rounded-xl bg-[#2d527a] hover:bg-[#386596] border border-[#8bb8e3]/50 text-[#ffffff] text-xs font-semibold flex items-center justify-center gap-1.5 transition"
                   >
                     {timerRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                     {timerRunning ? 'Пауза' : 'Старт'}
@@ -1624,7 +1648,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => applyCustomMinutes(customMinutes)}
-                    className="px-3 py-2 rounded-xl bg-[#2a2f40] hover:bg-[#363b4f] text-[#f2e6d5] text-xs transition"
+                    className="px-3 py-2 rounded-xl bg-[#1e2c45] hover:bg-[#273959] text-[#e6f2fc] text-xs transition"
                     title="Сброс"
                   >
                     <RotateCcw className="w-4 h-4" />
@@ -1633,70 +1657,103 @@ export default function App() {
               </div>
             )}
 
-            {/* Дедлайны (только для Амалии) */}
+            {/* Обновлённый блок дедлайнов */}
             {isAdmin && (
-              <div className="bg-[#202432]/85 border border-[#f0be7a]/20 rounded-2xl p-4 space-y-3">
-                <div className="text-sm font-semibold text-[#fbf4ea]">Дедлайны (JKU & ХПІ)</div>
-                <form onSubmit={handleAddDeadline} className="space-y-2">
+              <div className="bg-[#162033]/85 border border-[#8bb8e3]/20 rounded-2xl p-4 space-y-3.5">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold text-[#f2f7fc]">Дедлайны (JKU & ХПІ)</div>
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#1e2e47] border border-[#8bb8e3]/25 text-[#b8cde0]">
+                    активно: {activeDeadlinesCount}
+                  </span>
+                </div>
+
+                <form onSubmit={handleAddDeadline} className="space-y-2.5">
                   <input
                     type="text"
-                    placeholder="Что сдать (контрольная, эссе B2...)"
+                    placeholder="Что сдать (контрольная, лаба, эссе B2...)"
                     value={newDeadline.title}
                     onChange={(e) => setNewDeadline({ ...newDeadline, title: e.target.value })}
-                    className="w-full bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
+                    className="w-full bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
                   />
-                  <div className="flex gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <select
                       value={newDeadline.course}
                       onChange={(e) => setNewDeadline({ ...newDeadline, course: e.target.value })}
-                      className="bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-2.5 py-2 text-xs text-[#f2e6d5]"
+                      className="bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-2.5 py-2 text-xs text-[#f2f7fc]"
                     >
                       <option value="НТУ «ХПІ»">НТУ «ХПІ»</option>
                       <option value="JKU Deutsch B2">JKU Deutsch B2</option>
                       <option value="JKU Physik">JKU Physik</option>
                     </select>
-                    <input
-                      type="text"
-                      placeholder="Срок (напр. Пн 30.11)"
-                      value={newDeadline.due}
-                      onChange={(e) => setNewDeadline({ ...newDeadline, due: e.target.value })}
-                      className="flex-1 bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
-                    />
-                    <button
-                      type="submit"
-                      className="px-3 py-2 rounded-xl bg-[#543f2d] hover:bg-[#694f38] border border-[#e6b373]/50 text-[#fdf3e6] text-xs font-semibold"
-                    >
-                      +
-                    </button>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Срок (напр. Пн 30.11)"
+                        value={newDeadline.due}
+                        onChange={(e) => setNewDeadline({ ...newDeadline, due: e.target.value })}
+                        className="flex-1 min-w-0 bg-[#101826] border border-[#8bb8e3]/25 rounded-xl px-3 py-2 text-xs text-[#f2f7fc]"
+                      />
+                      <button
+                        type="submit"
+                        className="px-3.5 py-2 rounded-xl bg-[#2d527a] hover:bg-[#386596] border border-[#8bb8e3]/50 text-[#ffffff] text-xs font-semibold shrink-0"
+                        title="Добавить дедлайн"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 </form>
 
-                <div className="space-y-1.5">
-                  {deadlines.map((dl) => (
-                    <div
-                      key={dl.id}
-                      className="flex items-center justify-between gap-2 p-2 rounded-xl bg-[#181b26] border border-[#f0be7a]/15 text-xs"
-                    >
-                      <label className="flex items-center gap-2 cursor-pointer flex-1">
-                        <input
-                          type="checkbox"
-                          checked={dl.done}
-                          onChange={() => toggleDeadline(dl)}
-                          className="rounded border-[#f0be7a]/30 bg-[#202432]"
-                        />
-                        <span className={dl.done ? 'line-through text-[#7a7680]' : 'text-[#ece6df]'}>
-                          <strong className="text-[#f0be7a]">[{dl.course}]</strong> {dl.title}{' '}
-                          {dl.due && <span className="text-[#b5adb5]">({dl.due})</span>}
-                        </span>
-                      </label>
-                      <button
-                        onClick={() => deleteDeadline(dl.id)}
-                        className="text-[#8a828c] hover:text-[#e3a8b3]"
+                <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                  {sortedDeadlines.length === 0 ? (
+                    <p className="text-xs text-[#7c94ab] text-center py-2">Пока дедлайнов нет.</p>
+                  ) : (
+                    sortedDeadlines.map((dl) => (
+                      <div
+                        key={dl.id}
+                        className={`flex items-start justify-between gap-2.5 p-2.5 rounded-xl border text-xs transition ${
+                          dl.done
+                            ? 'bg-[#101724]/60 border-[#8bb8e3]/10 opacity-70'
+                            : 'bg-[#101826] border-[#8bb8e3]/25'
+                        }`}
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
+                        <button
+                          type="button"
+                          onClick={() => toggleDeadline(dl)}
+                          className="flex items-start gap-2.5 text-left flex-1 min-w-0 cursor-pointer"
+                        >
+                          {dl.done ? (
+                            <CheckSquare className="w-4 h-4 text-[#8be0cf] shrink-0 mt-0.5" />
+                          ) : (
+                            <Square className="w-4 h-4 text-[#8bb8e3] shrink-0 mt-0.5" />
+                          )}
+                          <div className="min-w-0 space-y-0.5">
+                            <div
+                              className={`font-medium break-words ${
+                                dl.done ? 'line-through text-[#728ba3]' : 'text-[#f2f7fc]'
+                              }`}
+                            >
+                              {dl.title}
+                            </div>
+                            <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+                              <span className="px-1.5 py-0.2 rounded bg-[#223452] text-[#b8d8f5] font-medium">
+                                {dl.course}
+                              </span>
+                              {dl.due && <span className="text-[#ffd48a]">до {dl.due}</span>}
+                            </div>
+                          </div>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => deleteDeadline(dl.id)}
+                          className="text-[#728ba3] hover:text-[#f2b6c2] p-1 shrink-0"
+                          title="Удалить дедлайн"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             )}
@@ -1709,14 +1766,14 @@ export default function App() {
         <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <form
             onSubmit={handlePinSubmit}
-            className="bg-[#202432] border border-[#f0be7a]/35 rounded-2xl p-6 w-full max-w-xs space-y-4 shadow-2xl"
+            className="bg-[#162033] border border-[#8bb8e3]/35 rounded-2xl p-6 w-full max-w-xs space-y-4 shadow-2xl"
           >
             <div className="text-center space-y-1">
-              <div className="w-10 h-10 rounded-full bg-[#4a392a] text-[#fae0b8] flex items-center justify-center mx-auto">
+              <div className="w-10 h-10 rounded-full bg-[#223452] text-[#ffd48a] flex items-center justify-center mx-auto">
                 <Lock className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-[#fbf4ea]">Доступ владельца</h3>
-              <p className="text-xs text-[#b5adb5]">Введите код доступа</p>
+              <h3 className="text-base font-bold text-[#f2f7fc]">Доступ владельца</h3>
+              <p className="text-xs text-[#94acc2]">Введите код доступа</p>
             </div>
             <input
               type="password"
@@ -1726,9 +1783,9 @@ export default function App() {
               value={pinInput}
               onChange={(e) => setPinInput(e.target.value)}
               autoFocus
-              className="w-full text-center tracking-[0.5em] text-lg bg-[#181b26] border border-[#f0be7a]/30 rounded-xl px-4 py-2.5 text-[#fdf4e7] focus:outline-none focus:border-[#f0be7a]"
+              className="w-full text-center tracking-[0.5em] text-lg bg-[#101826] border border-[#8bb8e3]/30 rounded-xl px-4 py-2.5 text-[#ffffff] focus:outline-none focus:border-[#8bb8e3]"
             />
-            {pinError && <p className="text-xs text-[#e3a8b3] text-center">Неверный код</p>}
+            {pinError && <p className="text-xs text-[#f2b6c2] text-center">Неверный код</p>}
             <div className="flex gap-2">
               <button
                 type="button"
@@ -1737,13 +1794,13 @@ export default function App() {
                   setPinInput('');
                   setPinError(false);
                 }}
-                className="flex-1 py-2 rounded-xl bg-[#2a2f40] text-[#d1c5b8] text-xs font-medium"
+                className="flex-1 py-2 rounded-xl bg-[#1e2c45] text-[#b8cde0] text-xs font-medium"
               >
                 Отмена
               </button>
               <button
                 type="submit"
-                className="flex-1 py-2 rounded-xl bg-[#543f2d] hover:bg-[#694f38] border border-[#e6b373]/50 text-[#fdf3e6] text-xs font-semibold"
+                className="flex-1 py-2 rounded-xl bg-[#2d527a] hover:bg-[#386596] border border-[#8bb8e3]/50 text-[#ffffff] text-xs font-semibold"
               >
                 Войти
               </button>
