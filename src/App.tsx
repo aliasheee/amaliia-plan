@@ -1354,7 +1354,7 @@ export default function App() {
 
               <input
                 type="text"
-                placeholder="Твоё имя (Настя, Варя, Ваня...)"
+                placeholder="Твоё имя (Настя, Варя, Стеша...)"
                 value={friendName}
                 onChange={(e) => setFriendName(e.target.value)}
                 className="w-full bg-[#181b26] border border-[#f0be7a]/20 rounded-xl px-3 py-2 text-xs text-[#f2e6d5]"
